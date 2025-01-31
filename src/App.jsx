@@ -3,10 +3,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Calendar from "./pages/Calendar";
 import Community from "./pages/Community";
-import Login from "./pages/Login";
 import MyPage from "./pages/MyPage";
 import News from "./pages/News";
-import Register from "./pages/Register";
+import Auth from "./pages/Auth";
+import CommunityDetail from "./components/community/CommunityDetail";
 
 const App = () => {
   return (
@@ -14,11 +14,12 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/calendar" element={<Calendar />} />
-        <Route path="/community" element={<Community />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/community" element={<Community />}>
+          <Route path=":postId" element={<CommunityDetail />} />
+        </Route>
+        <Route path="/auth" element={<Auth />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/news" element={<News />} />
-        <Route path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>
   );
