@@ -3,6 +3,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
+import { auth } from "./firebase";
 
 // 이메일/비밀번호 회원가입
 export const signUpEmail = async (email, password) => {
