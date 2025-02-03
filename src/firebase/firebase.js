@@ -6,13 +6,13 @@ import { getAnalytics } from "firebase/analytics";
 
 // Firebase 설정 객체
 const firebaseConfig = {
-  apiKey: "AIzaSyDOoWAO-pklE_Z3m0ZtSMs7WZgbnijqLxo",
-  authDomain: "medi-help-alone.firebaseapp.com",
-  projectId: "medi-help-alone",
-  storageBucket: "medi-help-alone.firebasestorage.app",
-  messagingSenderId: "531104125831",
-  appId: "1:531104125831:web:f2e44624b4ec8ec681b922",
-  measurementId: "G-S4LSJX7QMG",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_ID,
+  measurementId: import.meta.env.VITE_MEASUREMENT_ID,
 };
 
 // Firebase 초기화
