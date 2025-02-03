@@ -97,3 +97,52 @@
 - 공공 API를 활용한 약품 정보 데이터베이스 구축
 - Firebase를 활용한 서버리스 아키텍처 구현
 - 반응형 웹 디자인 적용
+
+## 폴더 구조
+MEDI-HELP/
+├── node_modules/
+├── public/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   │   ├── auth/
+│   │   │   ├── LoginForm.js
+│   │   │   └── SignUpForm.js
+│   │   ├── calendar/
+│   │   ├── common/
+│   │   ├── drugSearch/
+│   │   ├── community/
+│   │   ├── home/
+│   │   └── mypage/
+│   ├── news/
+│   ├── firebase/
+│   │   └── firebase.js
+│   ├── hooks/
+│   ├── pages/
+│   │   ├── Calendar.jsx
+│   │   ├── Community.jsx
+│   │   ├── DrugSearch.jsx
+│   │   ├── Home.jsx
+│   │   ├── MyPage.jsx
+│   │   └── News.jsx
+│   ├── redux/
+│   │   ├── actions/
+│   │   │   └── authActions.js
+│   │   ├── reducer/
+│   │   │   ├── communityReducer.js
+│   │   │   ├── drugSearchReducer.js
+│   │   │   └── rootReducer.js
+│   │   ├── actions.js
+│   │   └── store.js
+│   └── utils/
+├── App.css
+├── App.js
+├── index.css
+├── main.js
+├── eslintrc.json
+├── index.html
+├── package-lock.json
+├── package.json
+├── README.md
+├── tailwind.config.js
+└── vite.config.js
