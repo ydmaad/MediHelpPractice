@@ -17,13 +17,13 @@ export const loginSuccess = (user) => ({
 
 // 로그인 실패 시 호출
 export const loginFailure = (error) => ({
-  type: AUTH_ACTIONS.loginFailure,
+  type: AUTH_ACTIONS.LOGIN_FAILURE,
   payload: error,
 });
 
 // 로그아웃 시 호출
 export const logout = () => ({
-  type: AUTH_ACTIONS.LOGIN_SUCCESS,
+  type: AUTH_ACTIONS.LOGOUT,
 });
 
 // 따로 할지 말지 결정하기

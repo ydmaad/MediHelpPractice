@@ -38,8 +38,7 @@ export const authReducer = (state = initialAuthState, action) => {
       return {
         ...state,
         user: {
-          ...state,
-          user,
+          ...state.user,
           ...action.payload,
         },
       };
