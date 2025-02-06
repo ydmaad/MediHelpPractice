@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { signUpEmail } from "../../firebase/auth";
 import { loginFailure, loginSuccess } from "../../redux/actions/authActions";
+import { useNavigate } from "react-router-dom";
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ const SignUpForm = () => {
   });
   const [error, setError] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // TODO: 입력값 변경 처리 함수
   const handleChange = (e) => {
@@ -37,7 +39,17 @@ const SignUpForm = () => {
         formData.password
       );
 
-      dispatch(loginSuccess(user));
+      if (signUpError) {
+        setError(signUpError);
+        dispatch(loginFailure(signUpError));
+        return;
+      }
+
+      if (user) {
+        dispatch(loginSuccess(user));
+        alert("회원가입이 완료되었습니다!");
+        navigate("/auth");
+      }
     } catch (error) {
       setError("회원가입 중 오류가 발생했습니다.");
       dispatch(loginFailure(error.message));
