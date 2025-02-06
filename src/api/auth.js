@@ -1,6 +1,8 @@
 import {
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
 } from "firebase/auth";
 import { auth } from "../firebase/firebase";
@@ -34,6 +36,23 @@ export const signInEmailAPI = async (email, password) => {
     );
     return { user: userCredential.user, error: null };
   } catch (error) {
+    return { user: null, error: error.message };
+  }
+};
+
+// 구글 로그인 Provider 인스턴스 생성
+// GoogleAuthProvider : 구글 로그인을 위한 인증 제공자 클래스
+const googleProvider = new GoogleAuthProvider();
+
+// Google 로그인 API
+export const gooleLoginAPI = async () => {
+  try {
+    // signInWithPopup : 팝업 창을 통한 로그인을 처리하는 Firebase 함수
+    const result = await signInWithPopup(auth, googleProvider);
+    console.log("구글 로그인 성공 : ", result.user);
+    return { user: result.user, error: null };
+  } catch (error) {
+    console.log("구글 로그인 실패 : ", error);
     return { user: null, error: error.message };
   }
 };
