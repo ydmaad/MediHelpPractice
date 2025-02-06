@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { signInEmail } from "../../firebase/auth";
+import { loginFailure, loginSuccess } from "../../redux/actions/authActions";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
@@ -36,6 +39,8 @@ const LoginForm = () => {
         return;
       }
       dispatch(loginSuccess(user));
+      alert("로그인되었습니다!");
+      navigate("/");
     } catch (error) {
       setError("로그인 중 오류가 발생했습니다.");
       dispatch(loginFailure(error.message));
