@@ -8,13 +8,16 @@ import { auth } from "./firebase";
 // 이메일/비밀번호 회원가입
 export const signUpEmail = async (email, password) => {
   try {
-    const userCredential = await createUserWithEmailAndPassword(
+    console.log("회원가입 시도::", { email });
+    const { user } = await createUserWithEmailAndPassword(
       auth,
       email,
       password
     );
-    return { user: userCredential.user, error: null };
+    console.log("회원가입 성공:::", user);
+    return { user, error: null };
   } catch (error) {
+    console.log("회원가입 실패:::", error.code, error.message);
     return { user: null, error: error.message };
   }
 };
