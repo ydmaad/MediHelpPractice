@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { signOutUser } from "../firebase/auth";
 import { logout } from "../redux/actions/authActions";
+import { signOutUser } from "../api/auth";
 
 const Home = () => {
   const dispatch = useDispatch();

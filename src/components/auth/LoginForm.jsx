@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { signInEmail } from "../../firebase/auth";
+
 import { loginFailure, loginSuccess } from "../../redux/actions/authActions";
 import { useNavigate } from "react-router-dom";
+import { signInEmail } from "../../api/auth";
 
 const LoginForm = () => {
   const navigate = useNavigate();
