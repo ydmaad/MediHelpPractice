@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { signUpEmail } from "../../firebase/auth";
 import { loginFailure, loginSuccess } from "../../redux/actions/authActions";
 import { useNavigate } from "react-router-dom";
+import { signUpEmail } from "../../api/auth";
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({

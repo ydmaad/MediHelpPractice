@@ -3,9 +3,11 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { auth } from "./firebase";
+import { auth } from "../firebase/firebase";
 
-// 이메일/비밀번호 회원가입
+// Firebase Authentication API 와 통신하는 함수들
+
+// 이메일/비밀번호 회원가입 API
 export const signUpEmail = async (email, password) => {
   try {
     console.log("회원가입 시도::", { email });
@@ -22,7 +24,7 @@ export const signUpEmail = async (email, password) => {
   }
 };
 
-// 이메일/비밀번호 로그인
+// 이메일/비밀번호 로그인 API
 export const signInEmail = async (email, password) => {
   try {
     const userCredential = await signInWithEmailAndPassword(
@@ -36,7 +38,7 @@ export const signInEmail = async (email, password) => {
   }
 };
 
-// 로그아웃
+// 로그아웃 API
 export const signOutUser = async () => {
   try {
     await signOut(auth);
