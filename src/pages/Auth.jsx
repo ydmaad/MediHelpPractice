@@ -1,15 +1,18 @@
-import React, { useState } from "react";
-import LoginForm from "../components/auth/LoginForm";
-import SignUpForm from "../components/auth/SignUpForm";
+import React from "react";
+import { Link, Outlet, useLocation } from "react-router-dom";
 
 const Auth = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  const location = useLocation();
+  const isLoginPage = location.pathname === "/auth/login";
+
   return (
     <div>
-      {isLogin ? <LoginForm /> : <SignUpForm />}
-      <button onClick={() => setIsLogin(!isLogin)}>
-        {isLogin ? "회원가입하기" : "로그인하기"}
-      </button>
+      <Outlet />
+      <div>
+        <Link to={isLoginPage ? "/auth/signup" : "/auth/login"}>
+          {isLoginPage ? "회원가입하기" : "로그인하기"}
+        </Link>
+      </div>
     </div>
   );
 };
