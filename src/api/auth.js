@@ -42,10 +42,11 @@ export const signInEmailAPI = async (email, password) => {
 
 // 구글 로그인 Provider 인스턴스 생성
 // GoogleAuthProvider : 구글 로그인을 위한 인증 제공자 클래스
+// 이 provider는 구글 로그인에 필요한 설정을 담고 있음
 const googleProvider = new GoogleAuthProvider();
 
 // Google 로그인 API
-export const gooleLoginAPI = async () => {
+export const googleLoginAPI = async () => {
   try {
     // signInWithPopup : 팝업 창을 통한 로그인을 처리하는 Firebase 함수
     const result = await signInWithPopup(auth, googleProvider);

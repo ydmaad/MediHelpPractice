@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { loginFailure, loginSuccess } from "../../redux/actions/authActions";
 import { useNavigate } from "react-router-dom";
 import { signInEmailAPI } from "../../api/auth";
+import GoogleLogin from "./GoogleLogin";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -79,6 +80,7 @@ const LoginForm = () => {
         {error && <div className="error-message">{error}</div>}
         <button type="submit">로그인</button>
       </form>
+      <GoogleLogin />
     </div>
   );
 };
