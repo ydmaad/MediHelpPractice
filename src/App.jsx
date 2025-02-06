@@ -19,8 +19,10 @@ const App = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
+        console.log("로그인 상태:", user.email);
         store.dispatch(loginSuccess(user));
       } else {
+        console.log("로그아웃 상태");
         store.dispatch(logout());
       }
     });
