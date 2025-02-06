@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../redux/actions/authActions";
-import { signOutUser } from "../api/auth";
+import { signOutUserAPI } from "../api/auth";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ const Home = () => {
 
   const handleLogout = async () => {
     try {
-      const { error } = await signOutUser();
+      const { error } = await signOutUserAPI();
       if (error) {
         console.log("로그아웃 실패:", error);
         return;

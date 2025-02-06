@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 
 import { loginFailure, loginSuccess } from "../../redux/actions/authActions";
 import { useNavigate } from "react-router-dom";
-import { signInEmail } from "../../api/auth";
+import { signInEmailAPI } from "../../api/auth";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const LoginForm = () => {
     setError("");
 
     try {
-      const { user, error: loginError } = await signInEmail(
+      const { user, error: loginError } = await signInEmailAPI(
         formData.email,
         formData.password
       );

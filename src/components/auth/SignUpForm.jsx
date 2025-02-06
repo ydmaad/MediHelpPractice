@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginFailure, loginSuccess } from "../../redux/actions/authActions";
 import { useNavigate } from "react-router-dom";
-import { signUpEmail } from "../../api/auth";
+import { signUpEmailAPI } from "../../api/auth";
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
@@ -34,7 +34,7 @@ const SignUpForm = () => {
     }
 
     try {
-      const { user, error: signUpError } = await signUpEmail(
+      const { user, error: signUpError } = await signUpEmailAPI(
         formData.email,
         formData.password
       );

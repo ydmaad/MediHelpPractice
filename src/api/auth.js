@@ -8,7 +8,7 @@ import { auth } from "../firebase/firebase";
 // Firebase Authentication API 와 통신하는 함수들
 
 // 이메일/비밀번호 회원가입 API
-export const signUpEmail = async (email, password) => {
+export const signUpEmailAPI = async (email, password) => {
   try {
     console.log("회원가입 시도::", { email });
     const { user } = await createUserWithEmailAndPassword(
@@ -25,7 +25,7 @@ export const signUpEmail = async (email, password) => {
 };
 
 // 이메일/비밀번호 로그인 API
-export const signInEmail = async (email, password) => {
+export const signInEmailAPI = async (email, password) => {
   try {
     const userCredential = await signInWithEmailAndPassword(
       auth,
@@ -39,7 +39,7 @@ export const signInEmail = async (email, password) => {
 };
 
 // 로그아웃 API
-export const signOutUser = async () => {
+export const signOutUserAPI = async () => {
   try {
     await signOut(auth);
     return { error: null };
@@ -49,6 +49,6 @@ export const signOutUser = async () => {
 };
 
 // 현재 로그인한 사용자 가져오기
-export const getCurrentUser = () => {
+export const getCurrentUserAPI = () => {
   return auth.currentUser;
 };
