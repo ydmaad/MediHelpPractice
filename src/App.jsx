@@ -14,6 +14,8 @@ import { store } from "./redux/store";
 import { Provider } from "react-redux";
 import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
+import Layout from "./components/common/layout/Layout";
+import DrugSearch from "./pages/DrugSearch";
 
 const App = () => {
   useEffect(() => {
@@ -32,20 +34,23 @@ const App = () => {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/calendar" element={<Calendar />} />
-          <Route path="/community" element={<Community />}>
-            <Route path=":postId" element={<CommunityDetail />} />
-          </Route>
-          <Route path="/auth" element={<Auth />}>
-            <Route index element={<Navigate to="/auth/login" replace />} />
-            <Route path="login" element={<LoginForm />} />
-            <Route path="signup" element={<SignUpForm />} />
-          </Route>
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/news" element={<News />} />
-        </Routes>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/calendar" element={<Calendar />} />
+            <Route path="/community" element={<Community />}>
+              <Route path=":postId" element={<CommunityDetail />} />
+            </Route>
+            <Route path="/auth" element={<Auth />}>
+              <Route index element={<Navigate to="/auth/login" replace />} />
+              <Route path="login" element={<LoginForm />} />
+              <Route path="signup" element={<SignUpForm />} />
+            </Route>
+            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/news" element={<News />} />
+            <Route path="/drug-search" element={<DrugSearch />} />
+          </Routes>
+        </Layout>
       </BrowserRouter>
     </Provider>
   );
