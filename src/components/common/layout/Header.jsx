@@ -9,8 +9,8 @@ const Header = () => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   return (
-    <header className="bg-white ">
-      <div className="flex justify-between items-center">
+    <header className="bg-white drop-shadow-md">
+      <div className="flex justify-between items-center h-16">
         {/* 로고 */}
         <div>
           <Link to="/">
