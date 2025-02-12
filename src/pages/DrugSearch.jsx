@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { searchDrugAPI } from "../api/drug";
+import { searchDrugAPI, searchPillAPI } from "../api/drug";
 
 const DrugSearch = () => {
   const [keyword, setKeyword] = useState("");
@@ -8,6 +8,7 @@ const DrugSearch = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
 
+  // e약은요 검색 핸들러
   const handleSearch = async (e, page = 1) => {
     e?.preventDefault();
 
@@ -33,6 +34,30 @@ const DrugSearch = () => {
 
   const handlePageChange = (newPage) => {
     handleSearch(null, newPage);
+  };
+
+  // 낱알정보 검색 핸들러
+  const handlePillSearch = async (e, page = 1) => {
+    e?.preventDefault();
+
+    if (!keyword.trim()) {
+      alert("검색어를 입력해주세요.");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await searchPillAPI(keyword, page, 20);
+
+      setSearchResults(response.data);
+      setTotalCount(response.totalCount);
+      setCurrentPage(page);
+    } catch (error) {
+      console.error("검색 중 오류가 발생했습니다.");
+      setSearchResults([]);
+      setIsLoading(false);
+    }
   };
 
   return (
