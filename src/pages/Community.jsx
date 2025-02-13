@@ -3,11 +3,16 @@ import { useSelector } from "react-redux";
 import CommunityCard from "../components/common/CommunityCard";
 import Button from "../components/common/Button";
 import 약이미지 from "../assets/약이미지.jpg";
+import SectionTitle from "../components/common/SectionTitle";
+import SearchBar from "../components/common/SearchBar";
 
 const Community = () => {
   // const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { isAuthenticated } = useSelector((state) => state.auth);
+  const handleSearch = (searchTerm) => {
+    console.log("검색어:", searchTerm);
+  };
   const posts = [
     {
       id: 1,
@@ -46,9 +51,18 @@ const Community = () => {
   ];
   return (
     <div>
-      <div>
-        <h1>Community</h1>
-        <Button>글쓰기</Button>
+      <div className="flex justify-between">
+        <SectionTitle emoji="💬" subtitle="약에 대한 이야기를 나누어 보아요.">
+          커뮤니티
+        </SectionTitle>
+        <div className="flex justify-between">
+          <SearchBar
+            placeholder="글 제목 및 내용, 작성자 등을 검색"
+            onSearch={handleSearch}
+            size="w-[300px] h-10 mr-6"
+          />
+          <Button size="w-[106px] h-10">글쓰기</Button>
+        </div>
       </div>
 
       <div>
