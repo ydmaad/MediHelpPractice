@@ -1,18 +1,26 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import CommunityCard from "../components/common/CommunityCard";
-import Button from "../components/common/Button";
+import Button from "../components/common/button/PrimaryButton";
 import 약이미지 from "../assets/약이미지.jpg";
 import SectionTitle from "../components/common/SectionTitle";
 import SearchBar from "../components/common/SearchBar";
+import { useNavigate } from "react-router-dom";
 
 const Community = () => {
   // const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { isAuthenticated } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+
   const handleSearch = (searchTerm) => {
     console.log("검색어:", searchTerm);
   };
+
+  const handleWriteClick = () => {
+    navigate("/community/write");
+  };
+
   const posts = [
     {
       id: 1,
@@ -61,7 +69,13 @@ const Community = () => {
             onSearch={handleSearch}
             size="w-[300px] h-10 mr-6"
           />
-          <Button size="w-[106px] h-10">글쓰기</Button>
+          <Button
+            variant="primary"
+            size="w-[106px] h-10"
+            onClick={handleWriteClick}
+          >
+            글쓰기
+          </Button>
         </div>
       </div>
 
