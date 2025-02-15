@@ -16,6 +16,7 @@ import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
 import Layout from "./components/common/layout/Layout";
 import DrugSearch from "./pages/DrugSearch";
+import CommunityWrite from "./components/community/CommunityWrite";
 
 const App = () => {
   useEffect(() => {
@@ -38,9 +39,9 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/calendar" element={<Calendar />} />
-            <Route path="/community" element={<Community />}>
-              <Route path=":postId" element={<CommunityDetail />} />
-            </Route>
+            <Route path="/community" element={<Community />} />
+            <Route path="/community/write" element={<CommunityWrite />} />
+            <Route path="/community/:postId" element={<CommunityDetail />} />
             <Route path="/auth" element={<Auth />}>
               <Route index element={<Navigate to="/auth/login" replace />} />
               <Route path="login" element={<LoginForm />} />
