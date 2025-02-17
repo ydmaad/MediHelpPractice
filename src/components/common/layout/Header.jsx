@@ -28,7 +28,7 @@ const Header = () => {
           <div>
             <FaBell />
           </div>
-          <div>{user}</div>
+          <div>{user?.email || null}</div>
           {isAuthenticated ? (
             <>
               <button>로그아웃</button>
