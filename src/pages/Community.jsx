@@ -9,8 +9,8 @@ import { useNavigate } from "react-router-dom";
 
 const Community = () => {
   // const [posts, setPosts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const [isLoading, setIsLoading] = useState(false);
+  const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
   const handleSearch = (searchTerm) => {
