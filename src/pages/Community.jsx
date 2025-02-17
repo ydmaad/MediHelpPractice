@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import CommunityCard from "../components/common/CommunityCard";
 import Button from "../components/common/button/PrimaryButton";
@@ -6,10 +6,14 @@ import 약이미지 from "../assets/약이미지.jpg";
 import SectionTitle from "../components/common/SectionTitle";
 import SearchBar from "../components/common/SearchBar";
 import { useNavigate } from "react-router-dom";
+import { getPostAPI } from "../api/community";
 
 const Community = () => {
-  // const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [lastPosts, setLastPosts] = useState(null);
+  const [hasMore, setHasMore] = useState(true);
+  const [error, setError] = useState(null);
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
@@ -17,46 +21,55 @@ const Community = () => {
     console.log("검색어:", searchTerm);
   };
 
+  // 글쓰기 페이지로 이동
   const handleWriteClick = () => {
+    if (!user) {
+      alert("로그인이 필요한 서비스입니다.");
+      navigate("/auth/login");
+      return;
+    }
     navigate("/community/write");
   };
 
-  const posts = [
-    {
-      id: 1,
-      title:
-        "정수리 탈모로 이 약 먹어보신 분 계신가요? 저는 이런 저런 약을 먹고 있습니다!!",
-      content: "요즘 정수리 쪽이 점점 비는 것 같아서 복용 중입니다...",
-      author: "용감한사자",
-      time: "2025년 2월 12일",
-      commentCount: 37,
-      likeCount: 14,
-      image: 약이미지,
-      category: "궁금해요",
-    },
-    {
-      id: 2,
-      title: "정수리 탈모로 이 약 먹어보신 분 계신가요?",
-      content:
-        "요즘 정수리 쪽이 점점 비는 것 같아서 복용 중입니다... 어떤약을 먹는게 좋을까요?? 추천 좀 부탁드릴게요!!!",
-      author: "용감한사자",
-      time: "2025년 2월 12일",
-      commentCount: 37,
-      likeCount: 14,
-      category: "궁금해요",
-    },
-    {
-      id: 3,
-      title: "정수리 탈모로 이 약 먹어보신 분 계신가요?",
-      content: "요즘 정수리 쪽이 점점 비는 것 같아서 복용 중입니다...",
-      author: "용감한사자",
-      time: "2025년 2월 12일",
-      commentCount: 37,
-      likeCount: 14,
-      image: "/path/to/image.jpg",
-      category: "궁금해요",
-    },
-  ];
+  // 게시글 불러오기
+  const fetchPosts = async (isInitial = false) => {
+    if (isLoading || (!hasMore && !isInitial)) return;
+
+    setIsLoading(true);
+
+    try {
+      const {
+        posts: newPosts,
+        lastPosts: newLastPosts,
+        error,
+      } = await getPostAPI(isInitial ? null : lastPosts);
+
+      if (error) {
+        setError(error);
+        console.error("게시글을 불러오는 중 오류가 발생했습니다.", error);
+        return;
+      }
+
+      if (isInitial) {
+        setPosts(newPosts);
+      } else {
+        setPosts((prev) => [...prev, ...newPosts]);
+      }
+
+      setLastPosts(newLastPosts);
+      setHasMore(newPosts.length === 10);
+    } catch (error) {
+      setError("게시글을 불러오는 중 오류가 발생했습니다.", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // 초기 게시글 조회
+  useEffect(() => {
+    fetchPosts(true);
+  }, []);
+
   return (
     <div>
       <div className="flex justify-between">
@@ -86,7 +99,7 @@ const Community = () => {
             title={post.title}
             content={post.content}
             author={post.author}
-            time={post.time}
+            time={post.createdAt}
             commentCount={post.commentCount}
             image={post.image}
             category={post.category}
