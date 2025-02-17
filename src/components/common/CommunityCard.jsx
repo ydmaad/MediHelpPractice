@@ -25,9 +25,11 @@ const CommunityCard = ({
               <div className="text-gray/1000 text-header-18 pb-1 pt-2">
                 {title}
               </div>
-              <div className="text-[#F66555] text-header-18 ml-1">
-                ({commentCount})
-              </div>
+              {commentCount > 0 && (
+                <div className="text-[#F66555] text-header-18 ml-1">
+                  ({commentCount})
+                </div>
+              )}
             </div>
             <div className="text-gray/800 text-body-14">{content}</div>
           </div>
