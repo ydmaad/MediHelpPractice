@@ -1,6 +1,7 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -9,6 +10,7 @@ import {
   query,
   serverTimestamp,
   startAfter,
+  updateDoc,
 } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 
@@ -100,5 +102,47 @@ export const getPostDetailAPI = async (postId) => {
   } catch (error) {
     console.error("게시글 조회 오류", error);
     return { error: "게시글을 불러오는 중 오류가 발생했습니다." };
+  }
+};
+
+// 게시글 수정 API
+export const updatePostAPI = async (postId, updateData) => {
+  try {
+    const postRef = doc(db, "posts", postId);
+
+    await updateDoc(postRef, {
+      ...updateData,
+      updatedAt: serverTimestamp(),
+    });
+
+    return {
+      success: true,
+      error: null,
+    };
+  } catch (error) {
+    console.error("게시글 수정 오류: ", error);
+    return {
+      success: false,
+      error: error.message,
+    };
+  }
+};
+
+// 게시글 삭제 API
+export const deletePostAPI = async (postId) => {
+  try {
+    const postRef = doc(db, "posts", postId);
+    await deleteDoc(postRef);
+
+    return {
+      success: true,
+      error: null,
+    };
+  } catch (error) {
+    console.error("게시글 삭제 오류:", error);
+    return {
+      success: false,
+      error: error.message,
+    };
   }
 };
