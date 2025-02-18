@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getPostDetailAPI } from "../../api/community";
+import { deletePostAPI, getPostDetailAPI } from "../../api/community";
 import TextButton from "../common/TextButton";
 import { RxDividerVertical } from "react-icons/rx";
 
@@ -38,9 +38,42 @@ const CommunityDetail = () => {
     fetchPostAndComments();
   }, [postId]);
 
-  const handleDelete = () => {};
+  const handleDelete = async () => {
+    if (!user) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
 
-  const handleUpdate = () => {};
+    if (post.authorId !== user.uid) {
+      alert("본인이 작성한 글만 삭제할 수 있습니다.");
+      return;
+    }
+    setIsLoading(true);
+    try {
+      const { success, error } = await deletePostAPI(postId);
+
+      if (!success) {
+        alert(error || "게시글 삭제 중 오류가 발생했습니다.");
+        return;
+      }
+
+      alert("게시글이 삭제되었습니다.");
+      navigate("/community");
+    } catch (error) {
+      console.error("게시글 삭제 중 오류:", error);
+      alert("게시글 삭제 중 오류가 발생했습니다.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleUpdate = () => {
+    if (user?.uid !== post.authorId) {
+      alert("작성자만 수정할 수 있습니다.");
+      return;
+    }
+    navigate(`/community/edit/${postId}`);
+  };
 
   if (isLoading) {
     return <div>로딩중...</div>;
@@ -70,9 +103,9 @@ const CommunityDetail = () => {
           </div>
         </div>
         <div className="flex justify-between">
-          <TextButton>삭제</TextButton>
+          <TextButton onClick={handleDelete}>삭제</TextButton>
           <div className="h-4 w-[1px] bg-gray/200 my-1 mx-6" />
-          <TextButton>수정</TextButton>
+          <TextButton onClick={handleUpdate}>수정</TextButton>
         </div>
       </div>
       <div className="mt-[45px]">
