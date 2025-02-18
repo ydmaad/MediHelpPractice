@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { loginFailure, loginSuccess } from "../../redux/actions/authActions";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signInEmailAPI } from "../../api/auth";
 import GoogleLogin from "./GoogleLogin";
+import PrimaryButton from "../common/button/PrimaryButton";
+import { IoCheckboxOutline } from "react-icons/io5";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -50,11 +52,10 @@ const LoginForm = () => {
   };
 
   return (
-    <div>
-      <h2>로그인</h2>
+    <div className="flex flex-col gap-9">
+      <h2 className="text-header-28 text-gray/800">로그인</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">이메일</label>
+        <div className="mb-3">
           <input
             id="email"
             name="email"
@@ -62,11 +63,11 @@ const LoginForm = () => {
             required
             value={formData.email}
             onChange={handleChange}
-            placeholder="your@email.com"
+            placeholder="이메일"
+            className="border py-2 px-4 w-full rounded-md focus:outline-none"
           />
         </div>
-        <div>
-          <label htmlFor="password">비밀번호</label>
+        <div className="mb-3">
           <input
             id="password"
             name="password"
@@ -74,12 +75,28 @@ const LoginForm = () => {
             required
             value={formData.password}
             onChange={handleChange}
-            placeholder="********"
+            placeholder="비밀번호"
+            className="border py-2 px-4 w-full rounded-md focus:outline-none"
           />
         </div>
-        {error && <div className="error-message">{error}</div>}
-        <button type="submit">로그인</button>
+        <button className="flex justify-start mb-3">
+          <IoCheckboxOutline className="text-gray-600 w-5 h-5" />
+          <div className="text-body-14 text-gray/800 ml-1">이메일 기억하기</div>
+        </button>
+
+        <PrimaryButton type="submit" size="w-full">
+          로그인
+        </PrimaryButton>
       </form>
+      <div className="flex justify-between my-3">
+        <Link to={"/auth/signup"} className="text-gray/800">
+          비밀번호 찾기
+        </Link>
+        <Link to={"/auth/signup"} className="text-gray/800">
+          회원가입
+        </Link>
+      </div>
+
       <GoogleLogin />
     </div>
   );

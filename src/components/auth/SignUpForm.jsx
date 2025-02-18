@@ -3,9 +3,12 @@ import { useDispatch } from "react-redux";
 import { loginFailure, loginSuccess } from "../../redux/actions/authActions";
 import { useNavigate } from "react-router-dom";
 import { signUpEmailAPI } from "../../api/auth";
+import PrimaryButton from "../common/button/PrimaryButton";
+import { IoCheckbox, IoCheckboxOutline } from "react-icons/io5";
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
+    nickname: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -14,7 +17,7 @@ const SignUpForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // TODO: 입력값 변경 처리 함수
+  // 입력값 변경 처리 함수
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -23,7 +26,7 @@ const SignUpForm = () => {
     }));
   };
 
-  // TODO: 폼 제출 처리 함수
+  // 폼 제출 처리 함수
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -57,23 +60,50 @@ const SignUpForm = () => {
   };
 
   return (
-    <div>
-      <h2>회원가입</h2>
+    <div className="flex flex-col gap-9">
+      <h2 className="text-header-28 text-gray/800">회원가입</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">이메일</label>
+        <div className="mb-9">
+          <div className="text-body-16 text-gray/1000">닉네임</div>
           <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            value={formData.email}
+            id="nickname"
+            type="nickname"
+            name="nickname"
             onChange={handleChange}
-            placeholder="your@email.com"
+            placeholder="닉네임 설정"
+            className="border py-2 px-4 w-full rounded-md focus:outline-none"
           />
+          <div className="text-body-12 text-gray-600">
+            6자 이내로 설정해주세요.
+          </div>
         </div>
-        <div>
-          <label htmlFor="password">비밀번호</label>
+        <div className="mb-9">
+          <label htmlFor="email" className="text-body-16 text-gray/1000">
+            이메일 입력
+          </label>
+          <div className="flex justify-between">
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="example@도메인.com"
+              className="border py-2 px-4 w-[290px] rounded-md focus:outline-none"
+            />
+            <PrimaryButton size="w-[91px] h-[48px] px-2">
+              중복확인
+            </PrimaryButton>
+          </div>
+          <div className="text-body-12 text-gray-600">
+            이메일 주소를 입력해주세요.
+          </div>
+        </div>
+        <div className="mb-9">
+          <label htmlFor="password" className="text-body-16 text-gray/1000">
+            비밀번호
+          </label>
           <input
             id="password"
             name="password"
@@ -81,11 +111,20 @@ const SignUpForm = () => {
             required
             value={formData.password}
             onChange={handleChange}
-            placeholder="********"
+            placeholder="비밀번호를 입력해 주세요."
+            className="w-full border py-2 px-4 rounded-md focus:outline-none"
           />
+          <div className="text-body-12 text-gray-600">
+            영문자, 숫자, 특수문제 포함 6자 이상
+          </div>
         </div>
-        <div>
-          <label htmlFor="comfirmPassword">비밀번호 확인</label>
+        <div className="mb-9">
+          <label
+            htmlFor="comfirmPassword"
+            className="text-body-16 text-gray/1000"
+          >
+            비밀번호 확인
+          </label>
           <input
             id="confirmPassword"
             name="confirmPassword"
@@ -93,11 +132,27 @@ const SignUpForm = () => {
             required
             value={formData.confirmPassword}
             onChange={handleChange}
-            placeholder="********"
+            placeholder="다시 한번 입력해 주세요."
+            className="w-full border py-2 px-4 rounded-md focus:outline-none"
           />
         </div>
-        {error && <div>{error}</div>}
-        <button type="submit">회원가입</button>
+        <button className="flex justify-start">
+          <IoCheckbox className="text-gray-600 w-5 h-5" />
+          <div className="text-body-16 text-gray/600">
+            개인정보처리방침 약관 동의 (필수)
+          </div>
+        </button>
+
+        <button className="flex justify-start">
+          <IoCheckboxOutline className="text-gray-600 w-5 h-5" />
+          <div className="text-body-16 text-gray/600">
+            메디헬프 서비스 이용약관 동의 (필수)
+          </div>
+        </button>
+
+        <PrimaryButton type="submit" size="w-full">
+          회원가입
+        </PrimaryButton>
       </form>
     </div>
   );
