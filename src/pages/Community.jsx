@@ -31,6 +31,11 @@ const Community = () => {
     navigate("/community/write");
   };
 
+  // 게시글 상세 페이지로 이동
+  const handlePostClick = (id) => {
+    navigate(`/community/${id}`);
+  };
+
   // 게시글 불러오기
   const fetchPosts = async (isInitial = false) => {
     if (isLoading || (!hasMore && !isInitial)) return;
@@ -104,7 +109,7 @@ const Community = () => {
             image={post.image}
             category={post.category}
             likeCount={post.likeCount}
-            onClick={() => console.log("카드 클릭:", post.id)}
+            onClick={() => handlePostClick(post.id)}
           />
         ))}
       </div>
