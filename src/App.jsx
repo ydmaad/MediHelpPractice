@@ -17,6 +17,7 @@ import SignUpForm from "./components/auth/SignUpForm";
 import Layout from "./components/common/layout/Layout";
 import DrugSearch from "./pages/DrugSearch";
 import CommunityWrite from "./components/community/CommunityWrite";
+import CommunityEdit from "./components/community/CommunityEdit";
 
 const App = () => {
   useEffect(() => {
@@ -42,6 +43,7 @@ const App = () => {
             <Route path="/community" element={<Community />} />
             <Route path="/community/write" element={<CommunityWrite />} />
             <Route path="/community/:postId" element={<CommunityDetail />} />
+            <Route path="/community/edit/:postId" element={<CommunityEdit />} />
             <Route path="/auth" element={<Auth />}>
               <Route index element={<Navigate to="/auth/login" replace />} />
               <Route path="login" element={<LoginForm />} />
