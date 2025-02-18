@@ -11,7 +11,7 @@ const CommunityWrite = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const categoryList = ["메디톡", "궁금해요", "건강 꿀팁"];
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
