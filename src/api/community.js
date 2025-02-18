@@ -1,6 +1,8 @@
 import {
   addDoc,
   collection,
+  doc,
+  getDoc,
   getDocs,
   limit,
   orderBy,
@@ -34,7 +36,7 @@ export const createPostAPI = async (postData) => {
   }
 };
 
-// 게시글 조회 API
+// 게시글 목록 조회 API
 export const getPostAPI = async (lastPost = null, postsPerPage = 10) => {
   try {
     let postsQuery;
@@ -73,5 +75,30 @@ export const getPostAPI = async (lastPost = null, postsPerPage = 10) => {
       lastPost: null,
       error: error.message,
     };
+  }
+};
+
+// 게시글 단일 조회 API
+export const getPostDetailAPI = async (postId) => {
+  try {
+    const docRef = doc(db, "posts", postId);
+    const docSnap = await getDoc(docRef);
+
+    if (!docSnap.exists()) {
+      return { error: "게시글을 찾을 수 없습니다." };
+    }
+
+    const data = {
+      id: docSnap.id,
+      ...docSnap.data(),
+      createdAt:
+        docSnap.data().createdAt?.toDate().toLocaleString() || "날짜 없음",
+      error: null,
+    };
+
+    return data;
+  } catch (error) {
+    console.error("게시글 조회 오류", error);
+    return { error: "게시글을 불러오는 중 오류가 발생했습니다." };
   }
 };
