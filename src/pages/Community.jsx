@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import CommunityCard from "../components/common/CommunityCard";
-import Button from "../components/common/button/PrimaryButton";
 import 약이미지 from "../assets/약이미지.jpg";
 import SectionTitle from "../components/common/SectionTitle";
 import SearchBar from "../components/common/SearchBar";
 import { useNavigate } from "react-router-dom";
 import { getPostAPI } from "../api/community";
+import PrimaryButton from "../components/common/button/PrimaryButton";
 
 const Community = () => {
   const [posts, setPosts] = useState([]);
@@ -87,13 +87,12 @@ const Community = () => {
             onSearch={handleSearch}
             size="w-[300px] h-10 mr-6"
           />
-          <Button
-            variant="primary"
-            size="w-[106px] h-10"
+          <PrimaryButton
+            style="w-[106px] h-10 text-header-16"
             onClick={handleWriteClick}
           >
             글쓰기
-          </Button>
+          </PrimaryButton>
         </div>
       </div>
 

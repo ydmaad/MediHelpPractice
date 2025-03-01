@@ -92,7 +92,7 @@ const SignUpForm = () => {
               placeholder="example@도메인.com"
               className="border py-2 px-4 w-[290px] rounded-md focus:outline-none"
             />
-            <PrimaryButton size="w-[91px] h-[48px] px-2">
+            <PrimaryButton style="w-[91px] h-[48px] px-2 text-header-18">
               중복확인
             </PrimaryButton>
           </div>
@@ -150,7 +150,7 @@ const SignUpForm = () => {
           </div>
         </button>
 
-        <PrimaryButton type="submit" size="w-full">
+        <PrimaryButton type="submit" style="w-full px-6 py-2 text-header-18">
           회원가입
         </PrimaryButton>
       </form>

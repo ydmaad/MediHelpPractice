@@ -1,11 +1,11 @@
 import React from "react";
 
-const PrimaryButton = ({ children, onClick, disabled = false, size }) => {
+const PrimaryButton = ({ children, onClick, disabled = false, style }) => {
   return (
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`rounded-md bg-primary/500 px-6 py-2 text-header-16 text-white hover:bg-primary/600 transition-colors ${size}`}
+      className={`rounded-md bg-primary/500 text-white hover:bg-primary/600 transition-colors ${style}`}
     >
       {children}
     </button>
