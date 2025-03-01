@@ -4,6 +4,7 @@ import PrimaryButton from "../common/button/PrimaryButton";
 import ToggleSwitch from "../common/ToggleSwitch";
 import { IoCloseOutline } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
+import "../../styles/calendar-custom.css";
 
 const MedicineAddModal = ({ isOpen, onClose, onSubmit }) => {
   const [alarmSet, setAlarmSet] = useState(false);
@@ -98,12 +99,22 @@ const MedicineAddModal = ({ isOpen, onClose, onSubmit }) => {
   const amPmOption = ["오전", "오후"];
 
   return (
-    <div className=" bg-gray-800 bg-opacity-50 flex items-center justify-center fixed inset-0 z-50  ">
-      <div className="w-[432px] h-[696px] bg-white overflow-y-auto rounded-lg p-6">
+    <div
+      className=" bg-gray-800 bg-opacity-50 flex items-center justify-center fixed inset-0 z-50"
+      onClick={onClose}
+    >
+      <div
+        className={`w-[432px] ${
+          alarmSet ? "h-[696px]" : "h-[590px]"
+        } h-[696px] bg-white overflow-y-auto rounded-lg p-6`}
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* 헤더 영역 */}
         <div className="flex justify-between mb-4">
           <h2 className="text-header-16 text-gray/800">나의 약 등록</h2>
-          <CgClose />
+          <button onClick={onClose}>
+            <CgClose />
+          </button>
         </div>
         {/*  */}
         <div className="mb-5">
@@ -156,7 +167,7 @@ const MedicineAddModal = ({ isOpen, onClose, onSubmit }) => {
             name="startDate"
             value={formData.startDate}
             onChange={handleChange}
-            className="w-[134px] h-10 border border-gray/200 rounded-sm"
+            className="w-[134px] h-10 border text-gray/600 border-gray/200 rounded-sm px-2"
           />
           <span>부터</span>
           <input
@@ -164,7 +175,7 @@ const MedicineAddModal = ({ isOpen, onClose, onSubmit }) => {
             name="endDate"
             value={formData.endDate}
             onChange={handleChange}
-            className="w-[134px] h-10 border border-gray/200 rounded-sm"
+            className="w-[134px] h-10 border text-gray/600 border-gray/200 rounded-sm px-2"
           />
           <span>까지</span>
         </div>
@@ -268,7 +279,10 @@ const MedicineAddModal = ({ isOpen, onClose, onSubmit }) => {
           ></textarea>
         </div>
         <div className="flex justify-center mt-10">
-          <PrimaryButton size="w-[104px] h-10" onClick={handleSubmit}>
+          <PrimaryButton
+            style="w-[104px] h-10 text-header-16"
+            onClick={handleSubmit}
+          >
             저장
           </PrimaryButton>
         </div>
