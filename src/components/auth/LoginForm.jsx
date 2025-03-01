@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-
 import { loginFailure, loginSuccess } from "../../redux/actions/authActions";
 import { Link, useNavigate } from "react-router-dom";
 import { signInEmailAPI } from "../../api/auth";
@@ -84,7 +83,7 @@ const LoginForm = () => {
           <div className="text-body-14 text-gray/800 ml-1">이메일 기억하기</div>
         </button>
 
-        <PrimaryButton type="submit" size="w-full">
+        <PrimaryButton type="submit" style="w-full px-6 py-2 text-header-16">
           로그인
         </PrimaryButton>
       </form>

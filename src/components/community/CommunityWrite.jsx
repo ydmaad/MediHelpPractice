@@ -106,7 +106,10 @@ const CommunityWrite = () => {
         <SkyblueButton size="w-[90px] h-[40px]" onClick={handleCancel}>
           취소
         </SkyblueButton>
-        <PrimaryButton size="w-[90px] h-[40px]" onClick={handleSubmit}>
+        <PrimaryButton
+          style="w-[90px] h-[40px] text-header-16"
+          onClick={handleSubmit}
+        >
           작성
         </PrimaryButton>
       </div>
