@@ -6,6 +6,7 @@ import { ko } from "date-fns/locale";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import PrimaryButton from "../components/common/button/PrimaryButton";
 import MedicineAddModal from "../components/calendar/MedicineAddModal";
+import SkyblueButton from "../components/common/button/SkyblueButton";
 
 const locales = {
   ko: ko,
@@ -19,8 +20,10 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
+const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
+
 const CalendarPage = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [events, setEvents] = useState([
     {
       title: "타이레놀 복용",
@@ -48,6 +51,20 @@ const CalendarPage = () => {
     }
   };
 
+  const handleAddMedicineClick = () => {
+    setIsOpen(true);
+  };
+
+  const formats = {
+    dateFormat: "dd",
+    dayFormat: (date, culture, localizer) => dayNames(date.getDay()),
+    monthHeaderFormat: (date, culture, localizer) =>
+      `${date.getFullYear()}년 ${String(date.getMonth() + 1).padStart(
+        2,
+        "0"
+      )}월`,
+  };
+
   return (
     <div>
       <MedicineAddModal
@@ -58,7 +75,15 @@ const CalendarPage = () => {
       <div>
         <SectionTitle emoji="✏️">복약 달력</SectionTitle>
       </div>
-      <PrimaryButton>약 추가</PrimaryButton>
+      <SkyblueButton
+        onClick={handleAddMedicineClick}
+        size={"px-6 py-2 w-[100px] h-[32px] text-body-14"}
+      >
+        약 등록
+      </SkyblueButton>
+      <PrimaryButton style={"w-[100px] h-[32px] text-body-14 px-6 py-2"}>
+        기록 추가
+      </PrimaryButton>
       <div>
         <Calendar
           localizer={localizer}
@@ -69,15 +94,12 @@ const CalendarPage = () => {
           selectable
           style={{ height: 600 }}
           defaultView="month"
-          views={["month", "week", "day", "agenda"]}
+          views={["month"]}
+          formats={formats}
           messages={{
             next: "다음",
             previous: "이전",
             today: "오늘",
-            month: "월",
-            week: "주",
-            day: "일",
-            agenda: "일정",
             date: "날짜",
             time: "시간",
             event: "일정",
