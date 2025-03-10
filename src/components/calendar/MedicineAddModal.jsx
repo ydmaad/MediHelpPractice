@@ -5,11 +5,14 @@ import ToggleSwitch from "../common/ToggleSwitch";
 import { IoCloseOutline } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
 import "../../styles/calendar-custom.css";
+import { addMedicineAPI } from "../../api/medicine";
+import { useDispatch, useSelector } from "react-redux";
+import { addMedicine } from "../../redux/actions/calendarActions";
 
 const MedicineAddModal = ({ isOpen, onClose, onSubmit }) => {
   const [alarmSet, setAlarmSet] = useState(false);
   const selectRef = useRef(null);
-  const [formData, setFormData] = useState({
+  const [medicineData, setMedicineData] = useState({
     title: "",
     medicineName: "",
     startDate: new Date().toISOString().split("T")[0],
@@ -19,39 +22,53 @@ const MedicineAddModal = ({ isOpen, onClose, onSubmit }) => {
       점심: false,
       저녁: false,
     },
-    weekDays: {
-      월: false,
-      화: false,
-      수: false,
-      목: false,
-      금: false,
-      토: false,
-      일: false,
-    },
-    time: {
-      ampm: "오전",
-      hour: "01",
-      minute: "00",
+    alarm: {
+      enabled: false,
+      weekDays: {
+        월: false,
+        화: false,
+        수: false,
+        목: false,
+        금: false,
+        토: false,
+        일: false,
+      },
+      time: {
+        ampm: "오전",
+        hour: "01",
+        minute: "00",
+      },
     },
     memo: "",
   });
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
 
   if (!isOpen) return null;
 
+  // 알람 설정 토글
   const handleAlarmToggle = () => {
-    setAlarmSet(!alarmSet);
+    setMedicineData((prev) => ({
+      ...prev,
+      alarm: {
+        ...prev.alarm,
+        enabled: !prev.alarm.enabled,
+      },
+    }));
   };
 
+  // 폼데이터 입력값 변경
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
+    setMedicineData((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
+  // 아침, 점심, 저녁 선택 토글
   const handleTiemOfDayToggle = (time) => {
-    setFormData((prev) => ({
+    setMedicineData((prev) => ({
       ...prev,
       timeOfDay: {
         ...prev.timeOfDay,
@@ -60,37 +77,65 @@ const MedicineAddModal = ({ isOpen, onClose, onSubmit }) => {
     }));
   };
 
+  // 알람 시간값 변경
   const handleTimeChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
+    setMedicineData((prev) => ({
       ...prev,
-      time: {
-        ...prev.time,
-        [name]: value,
+      alarm: {
+        ...prev.alarm,
+        time: {
+          ...prev.alarm.time,
+          [name]: value,
+        },
       },
     }));
   };
 
+  // 요일값 변경
   const handleWeekDayChange = (day) => {
-    setFormData((prev) => ({
+    setMedicineData((prev) => ({
       ...prev,
-      weekDays: {
-        ...prev.weekDays,
-        [day]: !prev.weekDays[day],
+      alarm: {
+        ...prev.alarm,
+        weekDays: {
+          ...prev.alarm.weekDays,
+          [day]: !prev.alarm.weekDays[day],
+        },
       },
     }));
   };
 
-  const handleSubmit = (e) => {
+  // 약 등록 폼 제출
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit(formData), onClose();
+    onSubmit(medicineData), onClose();
+
+    try {
+      const { success, id, error } = await addMedicineAPI(
+        medicineData,
+        user.uid
+      );
+
+      if (success) {
+        dispatch(addMedicine({ ...medicineData, id, userId: user.uid }));
+        alert("약이 성공적으로 등록되었습니다.");
+        onClose();
+      } else {
+        alert(`약 등록 실패: ${error}`);
+      }
+    } catch (error) {
+      alert(`오류가 발생했습니다: ${error.message}`);
+    }
   };
 
+  // 시간 범위
   const hourOption = [];
   for (let i = 0; i < 13; i++) {
     hourOption.push(i.toString().padStart(2, "0"));
   }
 
+  // 분 범위
   const minuteOption = [];
   for (let i = 0; i < 60; i += 5) {
     minuteOption.push(i.toString().padStart(2, "0"));
@@ -105,7 +150,7 @@ const MedicineAddModal = ({ isOpen, onClose, onSubmit }) => {
     >
       <div
         className={`w-[432px] ${
-          alarmSet ? "h-[696px]" : "h-[590px]"
+          medicineData.alarm.enabled ? "h-[696px]" : "h-[590px]"
         } h-[696px] bg-white overflow-y-auto rounded-lg p-6`}
         onClick={(e) => e.stopPropagation()}
       >
@@ -116,13 +161,13 @@ const MedicineAddModal = ({ isOpen, onClose, onSubmit }) => {
             <CgClose />
           </button>
         </div>
-        {/*  */}
+
         <div className="mb-5">
           <div className="flex flex-col gap-2">
             <input
               type="text"
               name="title"
-              value={formData.title}
+              value={medicineData.title}
               onChange={handleChange}
               placeholder="ex) 피부과약"
               className="border border-gray/200 rounded-sm text-body-16 text-gray/1000 px-4 py-2 focus:outline-none"
@@ -130,7 +175,7 @@ const MedicineAddModal = ({ isOpen, onClose, onSubmit }) => {
             <input
               type="text"
               name="medicineName"
-              value={formData.medicineName}
+              value={medicineData.medicineName}
               onChange={handleChange}
               placeholder="ex) 이소티논"
               className="border border-gray/200 rounded-sm text-body-16 text-gray/1000 px-4 py-2 focus:outline-none"
@@ -142,14 +187,14 @@ const MedicineAddModal = ({ isOpen, onClose, onSubmit }) => {
           <h2 className="text-gray/600 text-body-14">복용 일자</h2>
 
           <div className="flex gap-2">
-            {Object.keys(formData.timeOfDay).map((time) => {
+            {Object.keys(medicineData.timeOfDay).map((time) => {
               return (
                 <button
                   key={time}
                   type="button"
                   onClick={() => handleTiemOfDayToggle(time)}
                   className={`w-[122px] h-8 rounded-full ${
-                    formData.timeOfDay[time]
+                    medicineData.timeOfDay[time]
                       ? "bg-primary/500 text-white"
                       : "bg-gray/50 text-gray-800"
                   }`}
@@ -165,7 +210,7 @@ const MedicineAddModal = ({ isOpen, onClose, onSubmit }) => {
           <input
             type="date"
             name="startDate"
-            value={formData.startDate}
+            value={medicineData.startDate}
             onChange={handleChange}
             className="w-[134px] h-10 border text-gray/600 border-gray/200 rounded-sm px-2"
           />
@@ -173,7 +218,7 @@ const MedicineAddModal = ({ isOpen, onClose, onSubmit }) => {
           <input
             type="date"
             name="endDate"
-            value={formData.endDate}
+            value={medicineData.endDate}
             onChange={handleChange}
             className="w-[134px] h-10 border text-gray/600 border-gray/200 rounded-sm px-2"
           />
@@ -185,24 +230,24 @@ const MedicineAddModal = ({ isOpen, onClose, onSubmit }) => {
             <div className="flex flex-row items-center gap-2">
               <h2 className="text-body-14 text-gray/600">알림 설정</h2>
               <ToggleSwitch
-                isOn={alarmSet}
+                isOn={medicineData.alarm.enabled}
                 handleToggle={handleAlarmToggle}
               ></ToggleSwitch>
             </div>
-            {alarmSet && (
+            {medicineData.alarm.enabled && (
               <button className="text-body-14 text-primary/500">추가</button>
             )}
           </div>
-          {alarmSet && (
+          {medicineData.alarm.enabled && (
             <>
               <div className="flex gap-4">
-                {Object.keys(formData.weekDays).map((day) => (
+                {Object.keys(medicineData.alarm.weekDays).map((day) => (
                   <button
                     key={day}
                     type="button"
                     onClick={() => handleWeekDayChange(day)}
                     className={`w-10 h-10 rounded-full mb-4 ${
-                      formData.weekDays[day]
+                      medicineData.weekDays[day]
                         ? "bg-primary/500 text-white"
                         : "bg-gray/50 text-gray-800"
                     }`}
@@ -217,7 +262,7 @@ const MedicineAddModal = ({ isOpen, onClose, onSubmit }) => {
                   <select
                     ref={selectRef}
                     name="ampm"
-                    value={formData.time.ampm}
+                    value={medicineData.alarm.time.ampm}
                     onChange={handleTimeChange}
                     className="focus:outline-none text-gray/1000 text-body-16 appearance-none ml-3"
                   >
@@ -238,7 +283,7 @@ const MedicineAddModal = ({ isOpen, onClose, onSubmit }) => {
                 <div>
                   <select
                     name="hour"
-                    value={formData.time.hour}
+                    value={medicineData.alarm.time.hour}
                     onChange={handleTimeChange}
                     className="focus:outline-none appearance-none text-gray/600 text-body-16 border border-gray/200 py-2 px-10 rounded-sm"
                   >
@@ -251,7 +296,7 @@ const MedicineAddModal = ({ isOpen, onClose, onSubmit }) => {
                   <span className="p-2">:</span>
                   <select
                     name="minute"
-                    value={formData.time.minute}
+                    value={medicineData.alarm.time.minute}
                     onChange={handleTimeChange}
                     className="focus:outline-none appearance-none text-gray/600 text-body-16 border border-gray/200 py-2 px-10 rounded-sm"
                   >
@@ -272,7 +317,7 @@ const MedicineAddModal = ({ isOpen, onClose, onSubmit }) => {
           <h2>메모</h2>
           <textarea
             name="memo"
-            value={formData.memo}
+            value={medicineData.memo}
             onChange={handleChange}
             placeholder="약에 대한 간단한 기록"
             className="w-full h-20 p-2 focus:outline-none resize-none border border-gray/200 rounded-sm"
