@@ -31,7 +31,9 @@ const CommunityCard = ({
                 </div>
               )}
             </div>
-            <div className="text-gray/800 text-body-14">{content}</div>
+            <div className="text-gray/800 text-body-14 line-clamp-2">
+              {content}
+            </div>
           </div>
 
           <div className="flex items-center">
