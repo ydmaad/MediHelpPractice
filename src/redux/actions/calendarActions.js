@@ -1,4 +1,4 @@
-import { CALENDAR_ACTIONS } from "../actionTypes";
+import { CALENDAR_ACTIONS, MEDICINE_ACTIONS } from "../actionTypes";
 
 // 일정 추가
 export const addSchedule = (scheduleData) => ({
@@ -22,4 +22,16 @@ export const deleteSchedule = (scheduleId) => ({
 export const setAlarm = (scheduleId, alarm) => ({
   type: CALENDAR_ACTIONS.SET_ALARM,
   payload: { scheduleId, alarm },
+});
+
+// 약 등록
+export const addMedicine = (medicineData) => ({
+  type: MEDICINE_ACTIONS.ADD_MEDICINE,
+  payload: { medicineData },
+});
+
+// 약 삭제
+export const deleteMedicine = (medicineId) => ({
+  type: MEDICINE_ACTIONS.DELETE_MEDICINE,
+  payload: medicineId,
 });
