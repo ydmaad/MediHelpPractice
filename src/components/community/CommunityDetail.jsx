@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { deletePostAPI, getPostDetailAPI } from "../../api/community";
 import TextButton from "../common/TextButton";
-import { RxDividerVertical } from "react-icons/rx";
 
 const CommunityDetail = () => {
   const { postId } = useParams();
@@ -109,7 +108,9 @@ const CommunityDetail = () => {
         </div>
       </div>
       <div className="mt-[45px]">
-        <div className="text-body-16 text-gray/1000">{post.content}</div>
+        <div className="text-body-16 text-gray/1000 whitespace-pre-wrap">
+          {post.content}
+        </div>
       </div>
     </div>
   );
