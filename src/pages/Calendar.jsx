@@ -7,6 +7,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import PrimaryButton from "../components/common/button/PrimaryButton";
 import MedicineAddModal from "../components/calendar/MedicineAddModal";
 import SkyblueButton from "../components/common/button/SkyblueButton";
+import ScheduleAddModal from "../components/calendar/ScheduleAddModal";
 
 const locales = {
   ko: ko,
@@ -68,6 +69,11 @@ const CalendarPage = () => {
   return (
     <div>
       <MedicineAddModal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        onSubmit={handleSubmit}
+      />
+      <ScheduleAddModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         onSubmit={handleSubmit}
