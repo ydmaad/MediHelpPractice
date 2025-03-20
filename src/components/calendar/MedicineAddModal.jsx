@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { addMedicine } from "../../redux/actions/calendarActions";
 
 const MedicineAddModal = ({ isOpen, onClose, onSubmit }) => {
-  const [alarmSet, setAlarmSet] = useState(false);
   const selectRef = useRef(null);
   const [medicineData, setMedicineData] = useState({
     title: "",
