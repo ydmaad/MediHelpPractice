@@ -25,6 +25,11 @@ const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
 
 const CalendarPage = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMedicineModalOpen, setIsMedicineModalOpen] = useState(false);
+  const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
   const [events, setEvents] = useState([
     {
       title: "타이레놀 복용",
@@ -36,6 +41,10 @@ const CalendarPage = () => {
 
   const handleSubmit = (data) => {
     console.log("제출된 데이터", data);
+  };
+
+  const handleDateSelect = (date) => {
+    setSelectedDate(date.toISOString().split("T")[0]);
   };
 
   const handleSelectSlot = ({ start, end }) => {
@@ -53,7 +62,10 @@ const CalendarPage = () => {
   };
 
   const handleAddMedicineClick = () => {
-    setIsOpen(true);
+    setIsMedicineModalOpen(true);
+  };
+  const handleAddScheduleClick = () => {
+    setIsScheduleModalOpen(true);
   };
 
   const formats = {
@@ -69,14 +81,15 @@ const CalendarPage = () => {
   return (
     <div>
       <MedicineAddModal
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
+        isOpen={isMedicineModalOpen}
+        onClose={() => setIsMedicineModalOpen(false)}
         onSubmit={handleSubmit}
       />
       <ScheduleAddModal
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
+        isOpen={isScheduleModalOpen}
+        onClose={() => setIsScheduleModalOpen(false)}
         onSubmit={handleSubmit}
+        selectedDate={selectedDate}
       />
       <div>
         <SectionTitle emoji="✏️">복약 달력</SectionTitle>
@@ -87,7 +100,10 @@ const CalendarPage = () => {
       >
         약 등록
       </SkyblueButton>
-      <PrimaryButton style={"w-[100px] h-[32px] text-body-14 px-6 py-2"}>
+      <PrimaryButton
+        style={"w-[100px] h-[32px] text-body-14 px-6 py-2"}
+        onClick={handleAddScheduleClick}
+      >
         기록 추가
       </PrimaryButton>
       <div>
