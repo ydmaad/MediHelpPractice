@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../redux/actions/authActions";
 import { signOutUserAPI } from "../api/auth";
+// import MainCommunityCard from "../components/home";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ const Home = () => {
     <div>
       <h1>홈페이지</h1>
       {isAuthenticated && <button onClick={handleLogout}>로그아웃</button>}
+      {/* <MainCommunityCard></MainCommunityCard> */}
     </div>
   );
 };
