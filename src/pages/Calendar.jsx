@@ -2,20 +2,16 @@ import React, { useState } from "react";
 import SectionTitle from "../components/common/SectionTitle";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import {
-  addMonths, // 날짜 조작 - 다음 달로 이동
   format, // 날짜 포맷팅
   getDay, // 요일 가져오기
   parse, // 문자열 날짜 파싱
   startOfWeek, // 주의 시작일 가져오기
-  subMonths, // 날짜 조작 - 이전 달로 이동
 } from "date-fns";
 import { ko } from "date-fns/locale";
 import "react-big-calendar/lib/css/react-big-calendar.css"; // 캘린더 css
-import PrimaryButton from "../components/common/button/PrimaryButton";
 import MedicineAddModal from "../components/calendar/MedicineAddModal";
-import SkyblueButton from "../components/common/button/SkyblueButton";
 import ScheduleAddModal from "../components/calendar/ScheduleAddModal";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import CustomToolbar from "../components/calendar/CustomToolbar";
 
 // 지역화 설정(한국어)
 const locales = {
@@ -42,8 +38,8 @@ const CalendarPage = () => {
   const [events, setEvents] = useState([
     {
       title: "타이레놀 복용",
-      start: new Date(2025, 1, 20, 10, 0),
-      end: new Date(2025, 1, 21, 10, 0),
+      start: new Date(2025, 3, 20, 10, 0),
+      end: new Date(2025, 3, 21, 10, 0),
       medType: "해열제",
     },
   ]);
@@ -69,58 +65,21 @@ const CalendarPage = () => {
     setIsScheduleModalOpen(true);
   };
 
-  // 다음 달 이동 함수
-  const navigateToNextMonth = () => {
-    setCurrentDate(addMonths(currentDate, 1));
-  };
-
-  // 이전 달 이동 함수
-  const navigateToPrevMonth = () => {
-    setCurrentDate(subMonths(currentDate, 1));
-  };
-
-  // 커스텀 캘린더 툴바 컴포넌트
-  const CustomToolbar = () => {
-    const year = format(currentDate, "yyyy"); // 년도 추출
-    const month = format(currentDate, "MM"); // 월 추출
-    return (
-      <div className="my-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <button type="button" onClick={navigateToPrevMonth}>
-              <IoIosArrowBack size={20} className="text-gray/600" />
-            </button>
-            <span className="text-header-18 text-gray/800 mx-2">
-              {year}년 {month}월
-            </span>
-            <button type="button" onClick={navigateToNextMonth}>
-              <IoIosArrowForward size={20} className="text-gray/600" />
-            </button>
-          </div>
-          <div className="flex items-center gap-2">
-            <SkyblueButton
-              onClick={handleAddMedicineClick}
-              size={"px-6 py-2 w-[100px] h-[32px] text-body-14"}
-            >
-              약 등록
-            </SkyblueButton>
-            <PrimaryButton
-              style={"w-[100px] h-[32px] text-body-14 px-6 py-2"}
-              onClick={handleAddScheduleClick}
-            >
-              기록 추가
-            </PrimaryButton>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   const formats = {
     dateFormat: "dd", // 달력 셀 안에 날짜 숫자만 표시됨
     monthHeaderFormat: (date) =>
       `${format(date, "yyyy")}년 ${format(date, "MM")}월`, // 달력 상단에 표시되는 년/월 형식
   };
+
+  // 커스텀 툴바를 위한 props 함수
+  const customToolbar = () => (
+    <CustomToolbar
+      currentDate={currentDate}
+      setCurrentDate={setCurrentDate}
+      onAddMedicine={handleAddMedicineClick}
+      onAddSchedule={handleAddScheduleClick}
+    />
+  );
 
   return (
     <div>
@@ -156,7 +115,7 @@ const CalendarPage = () => {
           formats={formats}
           date={currentDate}
           onNavigate={(date) => setCurrentDate(date)}
-          components={{ toolbar: CustomToolbar }}
+          components={{ toolbar: customToolbar }}
           messages={{
             next: "다음",
             previous: "이전",
