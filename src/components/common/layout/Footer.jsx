@@ -4,9 +4,9 @@ import { MdCopyright } from "react-icons/md";
 
 const Footer = () => {
   return (
-    <footer className=" bg-gray/50 h-16">
+    <footer className=" bg-gray/50 h-16 mt-1">
       <div className="flex justify-between items-center">
-        <img src={MEDIHELP} alt="logo" />
+        <img src={MEDIHELP} alt="logo" className="ml-10" />
         <div className="flex flex-col items-center space-y-2">
           <div className="flex justify-center gap-5 text-gray/600">
             <div>엔지니어 | 양민애</div>
@@ -17,7 +17,7 @@ const Footer = () => {
             프로젝트를 혼자 구현한 것입니다.
           </div>
         </div>
-        <div className="flex justify-between items-center text-gray/600">
+        <div className="flex justify-between items-center text-gray/600 mr-10">
           <MdCopyright />
           2024 MEDIHELP. all right reserved.
         </div>
