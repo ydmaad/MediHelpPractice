@@ -4,7 +4,7 @@ import { MdCopyright } from "react-icons/md";
 
 const Footer = () => {
   return (
-    <footer className=" bg-gray/50 h-16 mt-1">
+    <footer className=" bg-gray/50 h-16 pt-1">
       <div className="flex justify-between items-center">
         <img src={MEDIHELP} alt="logo" className="ml-10" />
         <div className="flex flex-col items-center space-y-2">
