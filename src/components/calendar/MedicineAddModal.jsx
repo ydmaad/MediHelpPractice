@@ -142,8 +142,6 @@ const MedicineAddModal = ({ isOpen, onClose, onSubmit }) => {
 
   const amPmOption = ["오전", "오후"];
 
-  // 커밋 테스트
-
   return (
     <div
       className=" bg-gray-800 bg-opacity-50 flex items-center justify-center fixed inset-0 z-50"
