@@ -12,7 +12,7 @@ const Header = () => {
     <header className="bg-white drop-shadow-md sticky top-0 z-10">
       <div className="flex justify-between items-center h-16">
         {/* 로고 */}
-        <div>
+        <div className="ml-10">
           <Link to="/">
             <img src={MEDIHELP} alt="logo" />
           </Link>
@@ -24,7 +24,7 @@ const Header = () => {
         </div>
 
         {/* 우측 메뉴 */}
-        <div className="flex justify-between">
+        <div className="flex justify-between mr-10">
           <div>
             <FaBell />
           </div>
