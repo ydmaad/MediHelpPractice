@@ -24,20 +24,22 @@ const Header = () => {
         </div>
 
         {/* 우측 메뉴 */}
-        <div className="flex justify-between mr-10">
+        <div className="flex justify-between mr-10 items-center gap-3">
           <div>
             <FaBell />
           </div>
           <div>{user?.email || null}</div>
-          {isAuthenticated ? (
-            <>
-              <button>로그아웃</button>
-            </>
-          ) : (
-            <>
-              <Link to="/auth/login">로그인</Link>
-            </>
-          )}
+          <div>
+            {isAuthenticated ? (
+              <>
+                <button>로그아웃</button>
+              </>
+            ) : (
+              <>
+                <Link to="/auth/login">로그인</Link>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </header>
