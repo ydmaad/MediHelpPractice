@@ -45,11 +45,11 @@ const CommunityCard = ({
           </div>
         </div>
         {image && (
-          <div className="w-[120px] h-[120px] border-2 overflow-hidden rounded-xl">
+          <div className="w-32 h-32 flex-shrink-0 ">
             <img
               src={image}
               alt="대표이미지"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover rounded-xl"
             />
           </div>
         )}
