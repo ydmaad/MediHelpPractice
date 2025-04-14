@@ -12,6 +12,8 @@ import {
   startAfter,
   updateDoc,
 } from "firebase/firestore";
+import { getDownloadURL, uploadBytes } from "firebase/storage";
+import { v4 as uuidv4 } from "uuid";
 import { db } from "../firebase/firebase";
 
 // 게시글 작성 API
@@ -35,6 +37,33 @@ export const createPostAPI = async (postData) => {
       id: null,
       error: error.message,
     };
+  }
+};
+
+// 이미지 업로드 API
+export const uploadImage = async (file) => {
+  try {
+    if (!file) return { imageUrl: null };
+
+    // 파일 확장자 추출
+    const fileExtension = file.name.split(".").pop();
+
+    // 파일 명 생성
+    const fileName = `${uuidv4()}.${fileExtension}`;
+
+    // storage reference 생성
+    const storageRef = ref(storage, `community/${fileName}`);
+
+    // 파일 업로드
+    const snapshot = await uploadBytes(storageRef, file);
+
+    // 업로드된 파일의 다운로드 URL 가져오기
+    const imageUrl = await getDownloadURL(snapshot.ref);
+
+    return { imageUrl, error: null };
+  } catch (error) {
+    console.error("이미지 업로드 오류:", error);
+    return { imageUrl: null, error: error.message };
   }
 };
 
