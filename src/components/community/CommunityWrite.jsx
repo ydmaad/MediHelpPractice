@@ -89,6 +89,7 @@ const CommunityWrite = () => {
       throw error;
     }
   };
+
   // 게시글 작성 제출 핸들러
   const handleSubmit = async () => {
     if (!selectCategory) {

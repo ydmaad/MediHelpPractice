@@ -27,7 +27,6 @@ const CommunityDetail = () => {
         }
 
         setPost(postData);
-        console.log(post);
       } catch (error) {
         setError("게시글을 불러오는 중 오류가 발생하였습니다.");
       } finally {
@@ -108,6 +107,9 @@ const CommunityDetail = () => {
         </div>
       </div>
       <div className="mt-[45px]">
+        <div className="mb-10">
+          <img src={post.image} alt="게시글 이미지" />
+        </div>
         <div className="text-body-16 text-gray/1000 whitespace-pre-wrap">
           {post.content}
         </div>
