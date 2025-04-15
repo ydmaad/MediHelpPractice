@@ -107,9 +107,17 @@ const CommunityDetail = () => {
         </div>
       </div>
       <div className="mt-[45px]">
-        <div className="mb-10">
-          <img src={post.image} alt="게시글 이미지" />
-        </div>
+        {post.images && post.images.length > 0
+          ? post.images.map((image, index) => (
+              <div key={index} className="mb-10">
+                <img
+                  src={image}
+                  alt={`게시글 이미지 ${index + 1}`}
+                  className="max-h-60"
+                />
+              </div>
+            ))
+          : null}
         <div className="text-body-16 text-gray/1000 whitespace-pre-wrap">
           {post.content}
         </div>

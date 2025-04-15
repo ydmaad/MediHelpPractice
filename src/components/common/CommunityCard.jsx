@@ -9,9 +9,11 @@ const CommunityCard = ({
   author,
   time,
   likeCount,
-  image,
+  images,
   onClick,
 }) => {
+  const thumbnailImage = images && images.length > 0 ? images[0] : null;
+
   return (
     <div
       className="bg-white hover:cursor-pointer hovor:bg-gray/100 transition-colors mt-5  rounded-2xl"
@@ -44,12 +46,15 @@ const CommunityCard = ({
             <div className="text-gray/600 text-body-14">저장 {likeCount}</div>
           </div>
         </div>
-        {image && (
+        {thumbnailImage && (
           <div className="w-32 h-32 flex-shrink-0 ">
             <img
-              src={image}
+              src={thumbnailImage}
               alt="대표이미지"
               className="w-full h-full object-cover rounded-xl"
+              onError={(e) => {
+                console.log("왜 오류??????", thumbnailImage);
+              }}
             />
           </div>
         )}

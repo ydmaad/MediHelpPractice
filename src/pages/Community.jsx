@@ -105,7 +105,7 @@ const Community = () => {
             author={post.author}
             time={post.createdAt}
             commentCount={post.commentCount}
-            image={post.image}
+            images={post.images || (post.image ? [post.image] : [])}
             category={post.category}
             likeCount={post.likeCount}
             onClick={() => handlePostClick(post.id)}
