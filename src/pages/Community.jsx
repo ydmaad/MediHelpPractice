@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import CommunityCard from "../components/common/CommunityCard";
-import 약이미지 from "../assets/약이미지.jpg";
 import SectionTitle from "../components/common/SectionTitle";
 import SearchBar from "../components/common/SearchBar";
 import { useNavigate } from "react-router-dom";
