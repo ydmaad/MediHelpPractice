@@ -18,7 +18,7 @@ const SearchBar = ({ onSearch, placeholder, size }) => {
           value={searchTerm}
           onChange={(e) => SetSearchTerm(e.target.value)}
           placeholder={placeholder}
-          className="text-gray/600 text-body-14"
+          className="text-gray/600 text-body-14 bg-bg"
         />
         <IoSearch className="text-primary/500 w-5 h-5" />
       </div>
