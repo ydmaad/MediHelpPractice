@@ -3,7 +3,10 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDocs,
+  query,
   serverTimestamp,
+  where,
 } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 
@@ -46,6 +49,33 @@ export const deleteMedicineAPI = async (medicineId) => {
     console.error("약 삭제 오류:", error);
     return {
       success: false,
+      error: error.message,
+    };
+  }
+};
+
+// 사용자별 복용약 불러오기 API
+export const getUserMedicinesAPI = async (userId) => {
+  try {
+    const q = query(collection(db, "medicines"), where("userId", "==", userId));
+    const querySnapshot = await getDocs(q);
+    const medicines = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+      createdAt: doc.data().createAt?.doDate?.() || null,
+      updatedAt: doc.data().updateAt?.toDate?.() || null,
+    }));
+
+    return {
+      success: true,
+      medicines,
+      error: null,
+    };
+  } catch (error) {
+    console.error("약 목록 조회 오류:::::", error);
+    return {
+      success: false,
+      medicines: [],
       error: error.message,
     };
   }
