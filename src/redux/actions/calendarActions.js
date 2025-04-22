@@ -36,6 +36,7 @@ export const deleteMedicine = (medicineId) => ({
   payload: medicineId,
 });
 
+// 사용자별 약 목록 불러오기
 export const setMedicines = (medicines) => ({
   type: MEDICINE_ACTIONS.SET_MEDICINE,
   payload: medicines,
