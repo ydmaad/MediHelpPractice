@@ -35,3 +35,8 @@ export const deleteMedicine = (medicineId) => ({
   type: MEDICINE_ACTIONS.DELETE_MEDICINE,
   payload: medicineId,
 });
+
+export const setMedicines = (medicines) => ({
+  type: MEDICINE_ACTIONS.SET_MEDICINE,
+  payload: medicines,
+});
