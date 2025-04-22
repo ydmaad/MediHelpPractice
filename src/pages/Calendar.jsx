@@ -12,6 +12,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css"; // 캘린더 css
 import MedicineAddModal from "../components/calendar/MedicineAddModal";
 import ScheduleAddModal from "../components/calendar/ScheduleAddModal";
 import CustomToolbar from "../components/calendar/CustomToolbar";
+import MedicineFilter from "../components/calendar/MedicineFilter";
 
 // 지역화 설정(한국어)
 const locales = {
@@ -100,31 +101,36 @@ const CalendarPage = () => {
         {/* 타이틀 */}
         <SectionTitle emoji="✏️">복약 달력</SectionTitle>
       </div>
+      <div className="flex justify-between">
+        <div>
+          <MedicineFilter />
+        </div>
 
-      <div>
-        {/* 캘린더 컴포넌트 */}
-        <Calendar
-          localizer={localizer}
-          culture="ko"
-          events={events}
-          startAccessor="start"
-          endAccessor="end"
-          style={{ height: 600 }}
-          defaultView="month"
-          views={["month"]}
-          formats={formats}
-          date={currentDate}
-          onNavigate={(date) => setCurrentDate(date)}
-          components={{ toolbar: customToolbar }}
-          messages={{
-            next: "다음",
-            previous: "이전",
-            today: "오늘",
-            date: "날짜",
-            time: "시간",
-            event: "일정",
-          }}
-        />
+        <div>
+          {/* 캘린더 컴포넌트 */}
+          <Calendar
+            localizer={localizer}
+            culture="ko"
+            events={events}
+            startAccessor="start"
+            endAccessor="end"
+            style={{ height: 600, width: 792 }}
+            defaultView="month"
+            views={["month"]}
+            formats={formats}
+            date={currentDate}
+            onNavigate={(date) => setCurrentDate(date)}
+            components={{ toolbar: customToolbar }}
+            messages={{
+              next: "다음",
+              previous: "이전",
+              today: "오늘",
+              date: "날짜",
+              time: "시간",
+              event: "일정",
+            }}
+          />
+        </div>
       </div>
     </div>
   );
